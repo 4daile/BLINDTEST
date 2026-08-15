@@ -49,7 +49,7 @@ const LEVEL_DURATIONS = {
   noob: song.introEnd,
 };
 
-// ---------- lecture d'un extrait (0 -> durée) avec barre de progression ----------
+// ---------- lecture d'un extrait avec barre de progression ----------
 let activeAnimationFrame = null;
 let activePlayButton = null;
 
@@ -69,7 +69,7 @@ function stopPlayback() {
 function animateProgress(fillEl, startTime, duration, onDone) {
   const step = () => {
     const elapsed = player.currentTime - startTime;
-    const ratio = Math.min(elapsed / duration, 1);
+    const ratio = Math.min(Math.max(elapsed / duration, 0), 1);
     fillEl.style.width = `${ratio * 100}%`;
 
     if (ratio >= 1) {
@@ -81,6 +81,59 @@ function animateProgress(fillEl, startTime, duration, onDone) {
   activeAnimationFrame = requestAnimationFrame(step);
 }
 
+// IMPORTANT : player.play() doit être appelé de façon SYNCHRONE, directement
+// dans le gestionnaire de clic. Si on attend un événement (ex: 'loadedmetadata')
+// avant d'appeler play(), les navigateurs (Safari/iOS en particulier, parfois
+// Chrome) considèrent que la lecture n'est plus liée à un geste utilisateur et
+// la bloquent silencieusement — c'est ce qui causait le "rien ne se joue".
+function startClip(startTime, duration, fillEl, button) {
+  const isNewSource = !player.src.endsWith(song.file);
+
+  if (isNewSource) {
+    player.src = song.file;
+  }
+
+  fillEl.style.width = '0%';
+
+  if (!isNewSource && player.readyState >= 1) {
+    player.currentTime = startTime;
+  }
+
+  const playPromise = player.play();
+  if (playPromise && playPromise.catch) {
+    playPromise.catch((err) => {
+      console.error('Lecture audio bloquée ou impossible :', err);
+    });
+  }
+
+  if (button) {
+    button.classList.add('playing');
+    button.textContent = 'Pause';
+    activePlayButton = button;
+  }
+
+  const beginProgress = () => {
+    animateProgress(fillEl, startTime, duration, () => {
+      stopPlayback();
+      fillEl.style.width = '100%';
+    });
+  };
+
+  if (isNewSource || player.readyState < 1) {
+    // dès que les métadonnées sont dispo, on cale le point de départ exact
+    player.addEventListener(
+      'loadedmetadata',
+      () => {
+        player.currentTime = startTime;
+        beginProgress();
+      },
+      { once: true }
+    );
+  } else {
+    beginProgress();
+  }
+}
+
 function playClip(startTime, duration, fillEl, button) {
   const wasThisButton = activePlayButton === button;
   stopPlayback();
@@ -90,27 +143,7 @@ function playClip(startTime, duration, fillEl, button) {
     return; // un second clic sur le même bouton arrête juste la lecture
   }
 
-  fillEl.style.width = '0%';
-  player.src = song.file;
-
-  const startPlayback = () => {
-    player.currentTime = startTime;
-    player.play();
-    button.classList.add('playing');
-    button.textContent = 'Pause';
-    activePlayButton = button;
-
-    animateProgress(fillEl, startTime, duration, () => {
-      stopPlayback();
-      fillEl.style.width = '100%';
-    });
-  };
-
-  if (player.readyState >= 1) {
-    startPlayback();
-  } else {
-    player.addEventListener('loadedmetadata', startPlayback, { once: true });
-  }
+  startClip(startTime, duration, fillEl, button);
 }
 
 // ---------- boutons des 4 niveaux ----------
@@ -138,21 +171,5 @@ answerBox.addEventListener('click', () => {
   answerArtist.textContent = song.artist;
 
   stopPlayback();
-  answerProgressFill.style.width = '0%';
-  player.src = song.file;
-
-  const startPlayback = () => {
-    player.currentTime = song.chorusStart;
-    player.play();
-    animateProgress(answerProgressFill, song.chorusStart, song.revealDuration, () => {
-      player.pause();
-      answerProgressFill.style.width = '100%';
-    });
-  };
-
-  if (player.readyState >= 1) {
-    startPlayback();
-  } else {
-    player.addEventListener('loadedmetadata', startPlayback, { once: true });
-  }
+  startClip(song.chorusStart, song.revealDuration, answerProgressFill, null);
 });
