@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
+:root {
+  --purple: #B771E5;
+  --green: #AEEA94;
+  --cream: #FFFBCA;
+  --blue: #577BC1;
+  --indigo: #4635B1;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Archivo Black', sans-serif;
+  color: var(--cream);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: 'Archivo Black', sans-serif;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* ---------- fond en spotlight, utilisé sur les 2 pages ---------- */
+.glow-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--indigo);
+  overflow: hidden;
+}
+
+.glow-bg span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.75;
+}
+
+/* ================= PAGE D'ACCUEIL ================= */
+
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 32px;
+}
+
+.home-title {
+  position: relative;
+  font-size: clamp(2.2rem, 6vw, 3.6rem);
+  line-height: 1.1;
+  color: var(--purple);
+  letter-spacing: 1px;
+}
+
+.home-title .star {
+  display: inline-block;
+  color: #E8145B;
+  transform: translateY(2px);
+}
+
+.rules {
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rules h2 {
+  color: var(--green);
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.rules p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.levels-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1rem;
+}
+
+.levels-list .rule-heading {
+  text-decoration: underline;
+  margin-bottom: 4px;
+}
+
+.levels-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.levels-list li .star {
+  color: #E8145B;
+}
+
+.levels-list .pts {
+  color: var(--green);
+}
+
+.play-btn {
+  border: 3px solid var(--purple);
+  border-radius: 8px;
+  padding: 14px 46px;
+  font-size: 1.3rem;
+  color: var(--green);
+  background: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 20px rgba(174, 234, 148, 0.35);
+  transition: transform 0.15s ease;
+}
+
+.play-btn:hover,
+.play-btn:focus-visible {
+  transform: scale(1.05);
+}
+
+/* ================= PAGE QUESTION ================= */
+
+.question-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 16px 60px;
+  gap: 30px;
+}
+
+.game-title {
+  font-size: 0.85rem;
+  color: var(--purple);
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+
+.question-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-arrow {
+  font-size: 2.2rem;
+  color: #E8145B;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px rgba(232, 20, 91, 0.6));
+}
+
+.nav-arrow:hover,
+.nav-arrow:focus-visible {
+  color: var(--purple);
+}
+
+.question-number {
+  border: 3px solid #E8145B;
+  border-radius: 8px;
+  padding: 16px 40px;
+  font-size: 1.5rem;
+  color: var(--green);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.levels-grid {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.level h3 {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.level .level-time {
+  color: var(--green);
+  font-size: 1.3rem;
+}
+
+.progress-track {
+  width: 100%;
+  max-width: 160px;
+  height: 20px;
+  background: #E8145B;
+  border: 2px solid var(--purple);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--cream);
+  transition: width 0.05s linear;
+}
+
+.level-play {
+  border: 2px solid var(--purple);
+  border-radius: 6px;
+  padding: 6px 20px;
+  color: var(--purple);
+  font-size: 0.85rem;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.level-play:hover,
+.level-play:focus-visible,
+.level-play.playing {
+  background: var(--purple);
+  color: var(--indigo);
+}
+
+/* ---- case réponse ---- */
+
+.answer-box {
+  width: 100%;
+  max-width: 420px;
+  min-height: 220px;
+  border: 3px solid var(--indigo);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.answer-box.hidden-answer {
+  cursor: pointer;
+}
+
+.answer-box.revealed {
+  cursor: default;
+}
+
+.eye-icon {
+  width: 46px;
+  height: 46px;
+  stroke: var(--cream);
+}
+
+.answer-title,
+.answer-artist {
+  font-size: 1.2rem;
+}
+
+.answer-artist {
+  color: var(--green);
+}
+
+.answer-progress {
+  width: 100%;
+  max-width: 240px;
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 700px) {
+  .levels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .question-nav {
+    gap: 12px;
+  }
+
+  .question-number {
+    padding: 14px 24px;
+    font-size: 1.2rem;
+  }
+}

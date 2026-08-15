@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blind Test des Intros — Question</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="glow-bg" style="background:var(--blue);"></div>
+
+  <main class="question-page">
+    <a class="game-title" href="index.html">Blind Test des Intros</a>
+
+    <nav class="question-nav">
+      <button class="nav-arrow" id="prevBtn" aria-label="Question précédente">◀</button>
+      <div class="question-number">Question <span id="questionNumber">1</span></div>
+      <button class="nav-arrow" id="nextBtn" aria-label="Question suivante">▶</button>
+    </nav>
+
+    <section class="levels-grid">
+      <div class="level" data-level="hardcore">
+        <h3>Niveau Hardcore</h3>
+        <div class="level-time">1s</div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <button class="level-play">Play</button>
+      </div>
+
+      <div class="level" data-level="boss">
+        <h3>Niveau Boss</h3>
+        <div class="level-time">3s</div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <button class="level-play">Play</button>
+      </div>
+
+      <div class="level" data-level="medium">
+        <h3>Niveau Medium</h3>
+        <div class="level-time">5s</div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <button class="level-play">Play</button>
+      </div>
+
+      <div class="level" data-level="noob">
+        <h3>Niveau Noob</h3>
+        <div class="level-time">intro</div>
+        <div class="progress-track"><div class="progress-fill"></div></div>
+        <button class="level-play">Play</button>
+      </div>
+    </section>
+
+    <section class="answer-box hidden-answer" id="answerBox">
+      <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" />
+        <circle cx="12" cy="12" r="3" />
+        <line x1="3" y1="21" x2="21" y2="3" />
+      </svg>
+
+      <div class="answer-revealed" id="answerRevealed" hidden>
+        <p class="answer-title" id="answerTitle"></p>
+        <p class="answer-artist" id="answerArtist"></p>
+        <div class="progress-track answer-progress"><div class="progress-fill" id="answerProgressFill"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <audio id="player" preload="none"></audio>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
