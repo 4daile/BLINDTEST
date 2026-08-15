@@ -155,15 +155,20 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 16px 60px;
-  gap: 30px;
+  padding: 40px 20px 60px;
+  gap: 50px;
 }
 
 .game-title {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--purple);
   text-decoration: none;
   letter-spacing: 1px;
+  margin-bottom: 30px;
+
+  text-transform: uppercase;
+  background-color: var(--green);
+  border-radius: 3px;
 }
 
 .question-nav {
@@ -182,15 +187,18 @@ button {
 .nav-arrow:hover,
 .nav-arrow:focus-visible {
   color: var(--purple);
+  transition: 0.3s ease-in;
 }
 
 .question-number {
-  border: 3px solid #E8145B;
+  border: 3px solid #B771E5;
   border-radius: 8px;
-  padding: 16px 40px;
-  font-size: 1.5rem;
+  padding: 8px 30px;
+  font-size: 1.3rem;
   color: var(--green);
-  background: rgba(0, 0, 0, 0.15);
+  background: #E8145B;
+
+  text-transform: uppercase;
 }
 
 .levels-grid {
@@ -207,10 +215,12 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+
+  text-transform: uppercase;
 }
 
 .level h3 {
-  font-size: 0.85rem;
+  font-size: 0.90rem;
   letter-spacing: 0.5px;
 }
 
@@ -250,6 +260,7 @@ button {
 .level-play.playing {
   background: var(--purple);
   color: var(--indigo);
+  transition: background-color 0.2s ease-in;
 }
 
 /* ---- case réponse ---- */
@@ -284,6 +295,10 @@ button {
   stroke: var(--cream);
 }
 
+.answer-box.revealed .eye-icon {
+  display: none;
+}
+
 .answer-title,
 .answer-artist {
   font-size: 1.2rem;
@@ -313,4 +328,13 @@ button {
     padding: 14px 24px;
     font-size: 1.2rem;
   }
+
+  .question-page {
+  padding: 20px 20px 60px;
+}
+
+  .game-title {
+  font-size: 0.60rem;
+  margin-bottom: 5px;
+}
 }
