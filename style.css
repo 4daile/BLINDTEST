@@ -311,6 +311,7 @@ button {
 .answer-progress {
   width: 100%;
   max-width: 240px;
+  margin: auto;
 }
 
 /* ---------- responsive ---------- */
