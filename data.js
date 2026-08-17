@@ -4,7 +4,7 @@
 // - chorusStart   : seconde à laquelle démarre le refrain (lecture auto après la réponse)
 // - revealDuration: durée en secondes du refrain joué lors de la révélation
 const SONGS = [
-  { id: 1, title: 'Bad', artist: 'Michael Jackson', file: 'audio/BAD.mp3', introEnd: 17, chorusStart: 107, revealDuration: 8 }, // exemple repris de ta maquette
+  { id: 1, title: 'Bad', artist: 'Michael Jackson', file: 'audio/BAD.mp3', introEnd: 17, chorusStart: 130, revealDuration: 8 }, // exemple repris de ta maquette
   { id: 2, title: 'Titre 2 à définir', artist: 'Artiste 2 à définir', file: 'audio/02.mp3', introEnd: 8, chorusStart: 30, revealDuration: 8 },
   { id: 3, title: 'Titre 3 à définir', artist: 'Artiste 3 à définir', file: 'audio/03.mp3', introEnd: 8, chorusStart: 30, revealDuration: 8 },
   { id: 4, title: 'Titre 4 à définir', artist: 'Artiste 4 à définir', file: 'audio/04.mp3', introEnd: 8, chorusStart: 30, revealDuration: 8 },
