@@ -43,7 +43,7 @@ nextBtn.addEventListener('click', () => {
 
 // ---------- durées de chaque niveau ----------
 const LEVEL_DURATIONS = {
-  hardcore: 1,
+  hardcore: 0.4,
   boss: 3,
   medium: 5,
   noob: song.introEnd,
