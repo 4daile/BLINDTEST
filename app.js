@@ -22,6 +22,24 @@ const answerTitle = document.getElementById('answerTitle');
 const answerArtist = document.getElementById('answerArtist');
 const answerProgressFill = document.getElementById('answerProgressFill');
 
+// ---------- égalisation du volume (Web Audio API) ----------
+// On route l'élément <audio> à travers un GainNode dont le niveau vient de
+// song.gain (calculé une fois pour toutes dans data.js à partir de la loudness
+// LUFS de chaque fichier). Ça évite d'avoir à toucher le volume de la télé
+// selon la chanson.
+//
+// GLOBAL_VOLUME baisse ou monte le volume de TOUTES les chansons d'un coup,
+// sans casser l'équilibrage entre elles (le rapport entre les chansons reste
+// le même). 1 = volume actuel, 0.5 = deux fois moins fort, 1.2 = 20% plus fort.
+const GLOBAL_VOLUME = 0.2;
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const gainNode = audioCtx.createGain();
+gainNode.gain.value = (song.gain ?? 1) * GLOBAL_VOLUME;
+const sourceNode = audioCtx.createMediaElementSource(player);
+sourceNode.connect(gainNode);
+gainNode.connect(audioCtx.destination);
+
 // ---------- affichage du numéro + navigation ----------
 questionNumberEl.textContent = currentIndex;
 
@@ -87,6 +105,13 @@ function animateProgress(fillEl, startTime, duration, onDone) {
 // Chrome) considèrent que la lecture n'est plus liée à un geste utilisateur et
 // la bloquent silencieusement — c'est ce qui causait le "rien ne se joue".
 function startClip(startTime, duration, fillEl, button) {
+  // le contexte audio démarre parfois "suspendu" tant qu'aucun geste
+  // utilisateur ne l'a débloqué ; on le relance ici, toujours de façon
+  // synchrone dans le clic, pour la même raison que pour player.play().
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+
   const isNewSource = !player.src.endsWith(song.file);
 
   if (isNewSource) {
